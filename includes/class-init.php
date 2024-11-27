@@ -167,11 +167,11 @@ class Init {
 		wp_enqueue_style( 'we-bootstrap', WE_URI . '/assets/css/bootstrap.min.css', array(), wp_get_theme()->get( 'Version' ) );
 
 		// Enqueue navigation script.
-		wp_enqueue_script( 'we-bootstrap', WE_URI . '/assets/js/bootstrap.bundle.min.js', array(), wp_get_theme()->get( 'Version' ), true );
+		wp_enqueue_script( 'we-bootstrap', WE_URI . '/assets/js/bootstrap.bundle.min.js', array( 'jquery' ), wp_get_theme()->get( 'Version' ), true );
 
 		// Enqueue main script based on WP_DEBUG status.
 		$script_suffix = WP_DEBUG ? '' : '.min';
-		wp_enqueue_script( 'we-script', WE_URI . "/assets/js/main{$script_suffix}.js", array(), wp_get_theme()->get( 'Version' ), true );
+		wp_enqueue_script( 'we-script', WE_URI . "/assets/js/main{$script_suffix}.js", array( 'jquery' ), wp_get_theme()->get( 'Version' ), true );
 
 		// Enqueue additional stylesheet based on WP_DEBUG status.
 		$style_suffix = WP_DEBUG ? '' : '.min';
