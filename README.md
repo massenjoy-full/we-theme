@@ -1,0 +1,1 @@
+# WE - Simply WordPress Theme

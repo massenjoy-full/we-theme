@@ -1,0 +1,6 @@
+{
+	"require": {
+		"phpoffice/phpspreadsheet": "^2.2",
+		"igorbunov/checkbox-in-ua-php-sdk": "^1.3"
+	}
+}

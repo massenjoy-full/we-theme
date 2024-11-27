@@ -1,0 +1,43 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ secrets.PHP_VERSION }}
+        tools: composer
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Run PHP_CodeSniffer
+      run: vendor/bin/phpcs --standard=WordPress . -s --ignore=vendor/,*.js -n
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy code to server
+      env:
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -T $SERVER_USER@$SERVER_IP -p $SERVER_PORT << 'EOF'
+          cd ${{ secrets.SERVER_THEMES_PATH }}
+          git pull origin main
+        EOF
+
