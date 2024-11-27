@@ -40,3 +40,4 @@ jobs:
           cd ${{ secrets.SERVER_THEMES_PATH }}
           git pull origin main
         EOF
+
